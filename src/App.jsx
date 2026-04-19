@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import React, { useState, useEffect } from 'react';
 import { MapPin, Globe, Menu, X, ChevronDown, Utensils, Sparkles, Plane, Heart, Music, Bus, Image as ImageIcon } from 'lucide-react';
 
 const GH_PAGES = 'https://sebastiangoette91.github.io/boda-fotos2';
