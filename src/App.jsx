@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { MapPin, Globe, Menu, X, ChevronDown, Utensils, Sparkles, Plane, Heart, Music, Bus, Image as ImageIcon } from 'lucide-react';
 
@@ -8,7 +7,7 @@ const FALLBACK_BASE = 'https://cdn.jsdelivr.net/gh/sebastiangoette91/boda-fotos2
 
 const FILES = {
   hero:      'PrimeraPlana.jpeg',
-  intention: 'PrimeraPlana.jpeg',
+  intention: 'Intencion.png',
   oax1:      'OAX4.jpg',
   oax2:      'OAX2.jpg',
   oax3:      'OAX1.jpeg',
