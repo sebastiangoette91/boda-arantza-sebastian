@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 
+import React, { useState, useEffect } from 'react';
 import { MapPin, Globe, Menu, X, ChevronDown, Utensils, Sparkles, Plane, Heart, Music, Bus, Image as ImageIcon } from 'lucide-react';
 
 const GH_PAGES = 'https://sebastiangoette91.github.io/boda-fotos2';
@@ -90,8 +90,6 @@ export default function WeddingSite() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [t, setT] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [rsvp, setRsvp] = useState({ name: '', attending: 'yes', guests: '1', dietary: '', song: '', message: '' });
-  const [sent, setSent] = useState(false);
   const [faqIdx, setFaqIdx] = useState(null);
   const [activePlace, setActivePlace] = useState('oaxaca');
   const [debugLog, setDebugLog] = useState([]);
@@ -144,7 +142,7 @@ export default function WeddingSite() {
       event: {
         eyebrow: 'EL EVENTO', title: 'El Gran Día', location: 'Ex Hacienda San José', address: 'Oaxaca de Juárez, Oaxaca, México', schedule: 'Itinerario',
         items: [
-          { time: '2:00 PM', title: 'Ceremonia', desc: 'Nos damos el sí bajo los arcos de la hacienda', icon: 'heart' },
+          { time: '4:00 PM', title: 'Ceremonia', desc: 'Nos damos el sí bajo los arcos de la hacienda', icon: 'heart' },
           { time: '', title: 'Cóctel', desc: 'Mezcal, botanas y música', icon: 'sparkles' },
           { time: '', title: 'Cena', desc: 'Un banquete oaxaqueño', icon: 'utensils' },
           { time: '', title: 'Fiesta', desc: 'A bailar hasta el final', icon: 'music' }
@@ -187,15 +185,14 @@ export default function WeddingSite() {
         flights: 'Vuelos', flightsDesc: 'Aeropuerto Internacional Xoxocotlán (OAX) recibe vuelos directos desde CDMX, Monterrey, Tijuana, Houston, Dallas y Los Ángeles. Desde Buenos Aires o Europa, la ruta más cómoda es vía CDMX.'
       },
       gallery: { eyebrow: 'NOSOTROS', title: 'Nuestro primer viaje de novios', subtitle: 'por Oaxaca y Puerto Escondido' },
-      rsvp: { eyebrow: 'CONFIRMACIÓN', title: '¿Nos acompañas?', sub: 'Por favor confirma antes del 15 de Enero, 2027.', name: 'Nombre completo', attending: '¿Asistirás?', yes: 'Sí, ahí estaré', no: 'No podré acompañarlos', guests: 'Número de invitados (incluyéndote)', dietary: 'Restricciones alimenticias', song: 'Una canción que te haga bailar', message: 'Mensaje para los novios (opcional)', send: 'Enviar confirmación', placeholder: { name: 'Ej. María González', dietary: 'Vegetariano, sin gluten, etc.', song: 'Artista — Canción', message: 'Déjanos unas palabras...' }, sent: '¡Gracias!', sentMsg: 'Hemos recibido tu confirmación. Nos vemos en Oaxaca.' },
+      rsvp: { eyebrow: 'CONFIRMACIÓN', title: '¿Nos acompañas?', sub: 'Para confirmar tu lugar o resolver cualquier duda sobre tu visita a Oaxaca, ponte en contacto con nuestra wedding planner, Mariana Vez, a través de WhatsApp.', plannerName: 'Mariana Vez', plannerRole: 'Wedding Planner', whatsappLabel: 'Escribir por WhatsApp', whatsappNumber: '+52 951 656 1349', closing: 'Te esperamos' },
       faq: { eyebrow: 'PREGUNTAS', title: 'Lo que probablemente te preguntas', items: [
         { q: '¿Puedo llevar acompañante?', a: 'Por favor consulta tu invitación — ahí especificamos si tu pase incluye acompañante.' },
         { q: '¿Habrá transporte desde el centro?', a: 'Sí. Organizaremos shuttles desde puntos clave del centro histórico hacia la hacienda y de regreso al final de la noche. Los detalles los compartiremos más cerca de la fecha.' },
         { q: '¿Los niños son bienvenidos?', a: 'Adoramos a los pequeños, pero hemos decidido que sea una celebración solo para adultos. Gracias por comprender.' },
         { q: '¿Qué clima hace en febrero?', a: 'Días soleados (22–26°C) y noches frescas (8–12°C). Trae una chaqueta ligera para después del atardecer.' },
         { q: '¿Habrá opciones vegetarianas/veganas?', a: 'Sí. Indícanos tus restricciones en el formulario de confirmación y nuestro chef preparará algo especial.' },
-        { q: '¿Necesito visa para entrar a México?', a: 'Argentinos y la mayoría de europeos no requieren visa para estancias turísticas. Verifica los requisitos vigentes de tu país antes de viajar.' },
-        { q: '¿Tienen mesa de regalos?', a: 'Tu presencia es nuestro mejor regalo. Si aún así quieres obsequiarnos algo, encontrarás información en la invitación física.' }
+        { q: '¿Necesito visa para entrar a México?', a: 'Argentinos y la mayoría de europeos no requieren visa para estancias turísticas. Verifica los requisitos vigentes de tu país antes de viajar.' }
       ]},
       footer: { thanks: 'Gracias por ser parte de esta historia', names: 'Arantza & Sebastian', date: '13.02.2027 · Oaxaca' }
     },
@@ -214,7 +211,7 @@ export default function WeddingSite() {
       event: {
         eyebrow: 'THE EVENT', title: 'The Big Day', location: 'Ex Hacienda San José', address: 'Oaxaca de Juárez, Oaxaca, Mexico', schedule: 'Schedule',
         items: [
-          { time: '2:00 PM', title: 'Ceremony', desc: 'We say "I do" beneath the hacienda arches', icon: 'heart' },
+          { time: '4:00 PM', title: 'Ceremony', desc: 'We say "I do" beneath the hacienda arches', icon: 'heart' },
           { time: '', title: 'Cocktail', desc: 'Mezcal, bites and music', icon: 'sparkles' },
           { time: '', title: 'Dinner', desc: 'An Oaxacan feast', icon: 'utensils' },
           { time: '', title: 'Party', desc: 'Dancing until the end', icon: 'music' }
@@ -257,15 +254,14 @@ export default function WeddingSite() {
         flights: 'Flights', flightsDesc: 'Xoxocotlán International Airport (OAX) receives direct flights from Mexico City, Monterrey, Tijuana, Houston, Dallas and Los Angeles. From Buenos Aires or Europe, the easiest route is via Mexico City.'
       },
       gallery: { eyebrow: 'US', title: 'Our first trip as a couple', subtitle: 'through Oaxaca and Puerto Escondido' },
-      rsvp: { eyebrow: 'RSVP', title: 'Will you join us?', sub: 'Please confirm before January 15th, 2027.', name: 'Full name', attending: 'Will you attend?', yes: "Yes, I'll be there", no: "I can't make it", guests: 'Number of guests (including you)', dietary: 'Dietary restrictions', song: 'A song that makes you dance', message: 'Message for the couple (optional)', send: 'Send RSVP', placeholder: { name: 'e.g. María González', dietary: 'Vegetarian, gluten-free, etc.', song: 'Artist — Song', message: 'Leave us a few words...' }, sent: 'Thank you!', sentMsg: "We've received your RSVP. See you in Oaxaca." },
+      rsvp: { eyebrow: 'RSVP', title: 'Will you join us?', sub: 'To confirm your spot or for any questions about your visit to Oaxaca, please contact our wedding planner, Mariana Vez, via WhatsApp.', plannerName: 'Mariana Vez', plannerRole: 'Wedding Planner', whatsappLabel: 'Message on WhatsApp', whatsappNumber: '+52 951 656 1349', closing: 'We can\'t wait to see you' },
       faq: { eyebrow: 'FAQ', title: "What you're probably wondering", items: [
         { q: 'Can I bring a plus one?', a: 'Please check your invitation — it will specify whether your pass includes a plus one.' },
         { q: 'Will there be transportation from downtown?', a: "Yes. We'll organize shuttles from key points in the historic center to the hacienda and back at the end of the night. Details will be shared closer to the date." },
         { q: 'Are kids welcome?', a: "We love the little ones, but we've decided this will be an adults-only celebration. Thank you for understanding." },
         { q: "What's the weather like in February?", a: 'Sunny days (22–26°C / 72–79°F) and cool nights (8–12°C / 46–54°F). Bring a light jacket for after sunset.' },
         { q: 'Will there be vegetarian/vegan options?', a: 'Yes. Let us know your restrictions in the RSVP form and our chef will prepare something special.' },
-        { q: 'Do I need a visa for Mexico?', a: "Argentinians and most Europeans don't require a visa for tourist stays. Check your country's current requirements before traveling." },
-        { q: 'Is there a gift registry?', a: "Your presence is our greatest gift. If you'd still like to give us something, you'll find info in the physical invitation." }
+        { q: 'Do I need a visa for Mexico?', a: "Argentinians and most Europeans don't require a visa for tourist stays. Check your country's current requirements before traveling." }
       ]},
       footer: { thanks: 'Thank you for being part of this story', names: 'Arantza & Sebastian', date: '02.13.2027 · Oaxaca' }
     }
@@ -286,11 +282,6 @@ export default function WeddingSite() {
     setMenuOpen(false);
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  const handleSubmit = () => {
-    if (!rsvp.name.trim()) return;
-    setSent(true);
   };
 
   const mapsUrl = 'https://www.google.com/maps/place/Ex+Hacienda+San+Jos%C3%A9/@17.0823118,-96.8128386,17z';
@@ -629,120 +620,30 @@ export default function WeddingSite() {
       <section id="rsvp" className="py-24 md:py-32 px-6 relative overflow-hidden" style={{ backgroundColor: '#2B2420', color: '#F5EFE4' }}>
         <div className="absolute top-0 left-0 w-64 h-64 opacity-10" style={{ background: 'radial-gradient(circle, #E8B07A 0%, transparent 70%)' }} />
         <div className="absolute bottom-0 right-0 w-96 h-96 opacity-10" style={{ background: 'radial-gradient(circle, #87A08A 0%, transparent 70%)' }} />
-        <div className="max-w-2xl mx-auto relative z-10">
-          <div className="text-center mb-12">
-            <div className="f-sans text-xs tracking-[0.4em] uppercase mb-4" style={{ color: '#E8B07A' }}>{l.rsvp.eyebrow}</div>
-            <h2 className="f-display text-4xl sm:text-5xl md:text-6xl mb-6">{l.rsvp.title}</h2>
-            <p className="f-serif text-lg opacity-80">{l.rsvp.sub}</p>
+        <div className="max-w-2xl mx-auto relative z-10 text-center">
+          <div className="f-sans text-xs tracking-[0.4em] uppercase mb-4" style={{ color: '#E8B07A' }}>{l.rsvp.eyebrow}</div>
+          <h2 className="f-display text-4xl sm:text-5xl md:text-6xl mb-8">{l.rsvp.title}</h2>
+          <p className="f-serif text-lg md:text-xl leading-relaxed opacity-90 mb-10 max-w-xl mx-auto">{l.rsvp.sub}</p>
+
+          <div className="inline-block p-8 md:p-10 mb-8" style={{ backgroundColor: 'rgba(245,239,228,0.05)', border: '1px solid rgba(232,176,122,0.3)', borderRadius: '2px' }}>
+            <div className="f-sans text-[0.65rem] tracking-[0.4em] uppercase opacity-70 mb-2" style={{ color: '#E8B07A' }}>{l.rsvp.plannerRole}</div>
+            <div className="f-display text-2xl md:text-3xl mb-6">{l.rsvp.plannerName}</div>
+            <a
+              href={`https://wa.me/${l.rsvp.whatsappNumber.replace(/[^0-9]/g, '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-6 md:px-8 py-3 md:py-4 f-sans text-xs tracking-[0.3em] uppercase tick"
+              style={{ backgroundColor: '#E8B07A', color: '#2B2420' }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+              <span>{l.rsvp.whatsappLabel}</span>
+            </a>
+            <div className="f-serif text-base md:text-lg mt-5 opacity-80" style={{ letterSpacing: '0.05em' }}>{l.rsvp.whatsappNumber}</div>
           </div>
-          {!sent ? (
-            <div className="space-y-6">
-              <div>
-                <label className="f-sans text-xs tracking-[0.3em] uppercase opacity-70 block mb-2">{l.rsvp.name} *</label>
-                <input
-                  type="text"
-                  value={rsvp.name}
-                  onChange={(e) => setRsvp({ ...rsvp, name: e.target.value })}
-                  placeholder={l.rsvp.placeholder.name}
-                  className="w-full bg-transparent border-b f-serif text-lg py-2 px-0 tick"
-                  style={{ borderColor: 'rgba(245,239,228,0.3)', color: '#F5EFE4' }}
-                />
-              </div>
-              <div>
-                <label className="f-sans text-xs tracking-[0.3em] uppercase opacity-70 block mb-3">{l.rsvp.attending}</label>
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    onClick={() => setRsvp({ ...rsvp, attending: 'yes' })}
-                    className="py-3 px-4 f-sans text-sm tracking-wider tick"
-                    style={{
-                      backgroundColor: rsvp.attending === 'yes' ? '#E8B07A' : 'transparent',
-                      color: rsvp.attending === 'yes' ? '#2B2420' : '#F5EFE4',
-                      border: '1px solid #E8B07A'
-                    }}
-                  >
-                    {l.rsvp.yes}
-                  </button>
-                  <button
-                    onClick={() => setRsvp({ ...rsvp, attending: 'no' })}
-                    className="py-3 px-4 f-sans text-sm tracking-wider tick"
-                    style={{
-                      backgroundColor: rsvp.attending === 'no' ? 'rgba(245,239,228,0.9)' : 'transparent',
-                      color: rsvp.attending === 'no' ? '#2B2420' : '#F5EFE4',
-                      border: '1px solid rgba(245,239,228,0.5)'
-                    }}
-                  >
-                    {l.rsvp.no}
-                  </button>
-                </div>
-              </div>
-              {rsvp.attending === 'yes' && (
-                <>
-                  <div>
-                    <label className="f-sans text-xs tracking-[0.3em] uppercase opacity-70 block mb-2">{l.rsvp.guests}</label>
-                    <select
-                      value={rsvp.guests}
-                      onChange={(e) => setRsvp({ ...rsvp, guests: e.target.value })}
-                      className="w-full bg-transparent border-b f-serif text-lg py-2 px-0 tick"
-                      style={{ borderColor: 'rgba(245,239,228,0.3)', color: '#F5EFE4' }}
-                    >
-                      {[1,2,3,4].map(n => <option key={n} value={n} style={{ color: '#2B2420' }}>{n}</option>)}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="f-sans text-xs tracking-[0.3em] uppercase opacity-70 block mb-2">{l.rsvp.dietary}</label>
-                    <input
-                      type="text"
-                      value={rsvp.dietary}
-                      onChange={(e) => setRsvp({ ...rsvp, dietary: e.target.value })}
-                      placeholder={l.rsvp.placeholder.dietary}
-                      className="w-full bg-transparent border-b f-serif text-lg py-2 px-0 tick"
-                      style={{ borderColor: 'rgba(245,239,228,0.3)', color: '#F5EFE4' }}
-                    />
-                  </div>
-                  <div>
-                    <label className="f-sans text-xs tracking-[0.3em] uppercase opacity-70 block mb-2">{l.rsvp.song}</label>
-                    <input
-                      type="text"
-                      value={rsvp.song}
-                      onChange={(e) => setRsvp({ ...rsvp, song: e.target.value })}
-                      placeholder={l.rsvp.placeholder.song}
-                      className="w-full bg-transparent border-b f-serif text-lg py-2 px-0 tick"
-                      style={{ borderColor: 'rgba(245,239,228,0.3)', color: '#F5EFE4' }}
-                    />
-                  </div>
-                </>
-              )}
-              <div>
-                <label className="f-sans text-xs tracking-[0.3em] uppercase opacity-70 block mb-2">{l.rsvp.message}</label>
-                <textarea
-                  value={rsvp.message}
-                  onChange={(e) => setRsvp({ ...rsvp, message: e.target.value })}
-                  placeholder={l.rsvp.placeholder.message}
-                  rows={3}
-                  className="w-full bg-transparent border-b f-serif text-lg py-2 px-0 tick resize-none"
-                  style={{ borderColor: 'rgba(245,239,228,0.3)', color: '#F5EFE4' }}
-                />
-              </div>
-              <button
-                onClick={handleSubmit}
-                disabled={!rsvp.name.trim()}
-                className="w-full py-4 f-sans text-xs tracking-[0.4em] uppercase tick"
-                style={{
-                  backgroundColor: rsvp.name.trim() ? '#E8B07A' : 'rgba(232,176,122,0.3)',
-                  color: '#2B2420',
-                  cursor: rsvp.name.trim() ? 'pointer' : 'not-allowed'
-                }}
-              >
-                {l.rsvp.send}
-              </button>
-            </div>
-          ) : (
-            <div className="text-center py-12 fade-up">
-              <Heart size={40} strokeWidth={1.3} style={{ color: '#E8B07A' }} className="mx-auto mb-6" />
-              <h3 className="f-display text-4xl mb-4">{l.rsvp.sent}</h3>
-              <p className="f-serif text-xl opacity-80">{l.rsvp.sentMsg}</p>
-            </div>
-          )}
+
+          <div className="f-serif italic text-xl md:text-2xl mt-2" style={{ color: '#E8B07A' }}>{l.rsvp.closing}</div>
         </div>
       </section>
 
