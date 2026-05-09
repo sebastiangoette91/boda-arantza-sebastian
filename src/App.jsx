@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { MapPin, Globe, Menu, X, ChevronDown, Utensils, Sparkles, Plane, Heart, Music, Bus, Phone, Mail, Tag, ArrowRight, Image as ImageIcon } from 'lucide-react';
 
@@ -724,19 +725,13 @@ export default function WeddingSite() {
 
         {/* PROMO HOTELS CAROUSEL */}
         <div className="max-w-6xl mx-auto px-6 mb-4">
-          <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
-            <div>
-              <div className="inline-flex items-center gap-1.5 mb-2 px-2.5 py-1 f-sans text-[0.6rem] tracking-[0.3em] uppercase" style={{ backgroundColor: '#E8B07A', color: '#2B2420' }}>
-                <Tag size={10} strokeWidth={2} />
-                <span>{l.stay.promoBadge}</span>
-              </div>
-              <h3 className="f-display text-2xl sm:text-3xl md:text-4xl">{l.stay.promoTitle}</h3>
-              <p className="f-serif text-base mt-1 opacity-70 max-w-xl">{l.stay.promoSub}</p>
+          <div className="mb-5">
+            <div className="inline-flex items-center gap-1.5 mb-2 px-2.5 py-1 f-sans text-[0.6rem] tracking-[0.3em] uppercase" style={{ backgroundColor: '#E8B07A', color: '#2B2420' }}>
+              <Tag size={10} strokeWidth={2} />
+              <span>{l.stay.promoBadge}</span>
             </div>
-            <div className="f-sans text-[0.6rem] tracking-[0.3em] uppercase opacity-50 flex items-center gap-2">
-              <ArrowRight size={12} strokeWidth={1.5} />
-              <span>{l.stay.scrollHint}</span>
-            </div>
+            <h3 className="f-display text-2xl sm:text-3xl md:text-4xl">{l.stay.promoTitle}</h3>
+            <p className="f-serif text-base mt-1 opacity-70 max-w-xl">{l.stay.promoSub}</p>
           </div>
         </div>
         <div className="h-scroll overflow-x-auto pb-6 mb-16">
