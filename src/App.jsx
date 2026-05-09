@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect } from 'react';
 import { MapPin, Globe, Menu, X, ChevronDown, Utensils, Sparkles, Plane, Heart, Music, Bus, Phone, Mail, Tag, ArrowRight, Image as ImageIcon } from 'lucide-react';
 
