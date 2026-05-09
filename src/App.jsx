@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
-import { MapPin, Globe, Menu, X, ChevronDown, Utensils, Sparkles, Plane, Heart, Music, Bus, Image as ImageIcon } from 'lucide-react';
+import { MapPin, Globe, Menu, X, ChevronDown, Utensils, Sparkles, Plane, Heart, Music, Bus, Phone, Mail, Tag, ArrowRight, Image as ImageIcon } from 'lucide-react';
 
 const GH_PAGES = 'https://sebastiangoette91.github.io/boda-fotos2';
 const PRIMARY_BASE  = GH_PAGES;
@@ -28,7 +29,53 @@ const FALLBACKS = Object.fromEntries(
   Object.entries(FILES).map(([k, f]) => [k, `${FALLBACK_BASE}/${f}`])
 );
 
-function SafeImage({ src, fallbackSrc, alt, className, style, onStatus }) {
+// =================== HOTELES ===================
+const PROMO_HOTELS = [
+  {
+    name: 'Hotel Gran Fiesta Americana',
+    address: 'José María Pino Suárez 702, Ruta de la Independencia, Centro, Oaxaca',
+    rate: '$6,307',
+    code: 'G1WQY5 / BODA ARANTZA Y SEBASTIÁN',
+    phones: ['01 800 504 5000', '443 310 8019'],
+    whatsapp: '4431378728',
+    email: 'banquetesfgoa@posadas.com',
+    bookUrl: 'https://www.corpo-rate.com/login?groupId=G1WQY5@FGO',
+    bookUrlEn: 'https://www.corpo-rate.com/login?lang=EN&groupId=G1WQY5@FGO'
+  },
+  {
+    name: 'Hotel City Centro',
+    address: 'Aldama 410, Barrio de Jalatlaco, Oaxaca',
+    rate: '$2,900',
+    code: 'BODA ARANTZA Y SEBASTIÁN',
+    phones: ['951 502 22 70'],
+    email: 'ccoax.ventas1@norte19.com',
+    bookUrl: 'https://www.marriott.com/es/event-reservations/reservation-link.mi?id=1777315286449&key=GRP&guestreslink2=true&app=resvlink'
+  },
+  {
+    name: 'Hotel Oaxaca Real',
+    address: 'Manuel García Vigil 306, Ruta Independencia, Centro, Oaxaca',
+    rate: '$2,000',
+    code: 'BODA ARANTZA & SEBASTIAN',
+    phones: ['951 506 07 08 ext. 403', '951 100 97 78'],
+    emails: ['ventas@oaxacareal.com', 'grupos@oaxacareal.com']
+  }
+];
+
+const OTHER_HOTELS = [
+  { name: 'Hotel del Árbol', address: 'Calzada Madero 131, Centro, Oaxaca', rate: '$1,000', phone: '951 514 27 99' },
+  { name: 'Quinta Real Oaxaca', address: 'Calle 5 de Mayo 300, Ruta Independencia, Centro, Oaxaca', rate: '$7,500', phone: '951 501 6100' },
+  { name: 'Hotel Maela', address: 'Constitución 206, Ruta Independencia, Centro, Oaxaca', rate: '$1,700', phone: '951 516 6022' },
+  { name: 'Hotel Casa de los Frailes', address: 'Constitución 203, Ruta Independencia, Centro, Oaxaca', rate: '$2,600', phone: '951 513 6670' },
+  { name: 'Hotel Casa Vértiz', address: 'Reforma 404, Ruta Independencia, Centro, Oaxaca', rate: '$2,500', phone: '951 516 2525' },
+  { name: 'Bakal Hotel Boutique', address: 'Mariano Abasolo 217, Ruta Independencia, Centro, Oaxaca', rate: '$1,900', phone: '951 478 6937' },
+  { name: 'Hotel Casa Puga', address: 'Mariano Abasolo 119, Ruta Independencia, Centro, Oaxaca', rate: '$2,900', phone: '951 746 6719' },
+  { name: 'Hotel Los Amantes', address: 'Ignacio Allende 108, Ruta Independencia, Centro, Oaxaca', rate: '$3,000 – $4,000', phone: '951 514 88 99', note: 'Posada Dos Palmas, Casa Índigo y Casa Zanate' },
+  { name: 'Casa Esmeralda', address: 'Manuel García Vigil 517, Ruta Independencia, Centro, Oaxaca', rate: '$1,800', phone: '951 207 6455' },
+  { name: 'Hotel Parador Monte Carmelo', address: 'Manuel García Vigil 705, Ruta Independencia, Centro, Oaxaca', rate: '$3,500', phone: '951 501 0514' },
+  { name: 'Hotel Ayook', address: 'Francisco I. Madero 112, Centro Histórico, Oaxaca', rate: '$2,300', phone: '951 446 9866' }
+];
+
+function SafeImage({ src, fallbackSrc, alt, className, style }) {
   const [currentSrc, setCurrentSrc] = useState(src);
   const [triedFallback, setTriedFallback] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -40,19 +87,12 @@ function SafeImage({ src, fallbackSrc, alt, className, style, onStatus }) {
   }, [src]);
 
   const handleError = () => {
-    console.warn('[SafeImage] failed to load:', currentSrc);
-    if (onStatus) onStatus(alt, 'error', currentSrc);
     if (!triedFallback && fallbackSrc) {
-      console.warn('[SafeImage] trying fallback:', fallbackSrc);
       setTriedFallback(true);
       setCurrentSrc(fallbackSrc);
     } else {
       setFailed(true);
     }
-  };
-
-  const handleLoad = () => {
-    if (onStatus) onStatus(alt, 'ok', currentSrc);
   };
 
   if (failed || !currentSrc) {
@@ -79,8 +119,95 @@ function SafeImage({ src, fallbackSrc, alt, className, style, onStatus }) {
       style={style}
       loading="lazy"
       onError={handleError}
-      onLoad={handleLoad}
     />
+  );
+}
+
+function PromoHotelCard({ hotel, labels, lang }) {
+  const bookUrl = lang === 'en' && hotel.bookUrlEn ? hotel.bookUrlEn : hotel.bookUrl;
+  return (
+    <div className="flex-shrink-0 w-[300px] sm:w-[340px] flex flex-col" style={{ backgroundColor: '#F5EFE4', borderRadius: '2px', boxShadow: '0 2px 12px rgba(43,36,32,0.06)' }}>
+      <div style={{ height: 6, background: 'linear-gradient(90deg, #E8B07A 0%, #A0522D 100%)' }} />
+      <div className="p-6 flex flex-col flex-1">
+        <div className="inline-flex items-center self-start gap-1.5 px-2 py-1 mb-4 f-sans text-[0.6rem] tracking-[0.25em] uppercase" style={{ backgroundColor: '#E8B07A', color: '#2B2420' }}>
+          <Tag size={10} strokeWidth={2} />
+          <span>{labels.promoBadge}</span>
+        </div>
+        <h4 className="f-display text-2xl mb-3 leading-tight">{hotel.name}</h4>
+        <div className="flex items-start gap-1.5 f-sans text-xs opacity-70 mb-4 leading-relaxed">
+          <MapPin size={11} strokeWidth={1.5} className="mt-0.5 flex-shrink-0" />
+          <span>{hotel.address}</span>
+        </div>
+        <div className="mb-4 pb-4 border-b" style={{ borderColor: 'rgba(43,36,32,0.1)' }}>
+          <div className="f-sans text-[0.6rem] tracking-[0.3em] uppercase opacity-60 mb-1">{labels.from}</div>
+          <div className="f-display text-2xl" style={{ color: '#A0522D' }}>{hotel.rate} <span className="f-sans text-xs opacity-70">MXN {labels.perNight}</span></div>
+        </div>
+        <div className="mb-4 p-3" style={{ backgroundColor: 'rgba(160,82,45,0.08)', borderLeft: '2px solid #A0522D' }}>
+          <div className="f-sans text-[0.6rem] tracking-[0.3em] uppercase opacity-60 mb-1">{labels.code}</div>
+          <div className="f-serif text-sm leading-snug" style={{ color: '#A0522D', fontWeight: 500 }}>{hotel.code}</div>
+        </div>
+        <div className="space-y-1.5 mb-5 f-sans text-xs">
+          {hotel.phones && hotel.phones.map((p, i) => (
+            <a key={i} href={`tel:${p.replace(/\s/g, '')}`} className="flex items-center gap-2 hover:opacity-70 tick">
+              <Phone size={11} strokeWidth={1.5} style={{ color: '#A0522D' }} />
+              <span>{p}</span>
+            </a>
+          ))}
+          {hotel.whatsapp && (
+            <a href={`https://wa.me/52${hotel.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:opacity-70 tick">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+              <span>WhatsApp: {hotel.whatsapp}</span>
+            </a>
+          )}
+          {hotel.email && (
+            <a href={`mailto:${hotel.email}`} className="flex items-center gap-2 hover:opacity-70 tick break-all">
+              <Mail size={11} strokeWidth={1.5} style={{ color: '#A0522D' }} />
+              <span>{hotel.email}</span>
+            </a>
+          )}
+          {hotel.emails && hotel.emails.map((e, i) => (
+            <a key={i} href={`mailto:${e}`} className="flex items-center gap-2 hover:opacity-70 tick break-all">
+              <Mail size={11} strokeWidth={1.5} style={{ color: '#A0522D' }} />
+              <span>{e}</span>
+            </a>
+          ))}
+        </div>
+        {bookUrl && (
+          <a href={bookUrl} target="_blank" rel="noopener noreferrer" className="mt-auto flex items-center justify-center gap-2 py-3 f-sans text-[0.7rem] tracking-[0.3em] uppercase tick" style={{ backgroundColor: '#A0522D', color: '#F5EFE4' }}>
+            <span>{labels.book}</span>
+            <ArrowRight size={12} strokeWidth={1.5} />
+          </a>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function OtherHotelCard({ hotel, labels }) {
+  return (
+    <div className="flex-shrink-0 w-[260px] sm:w-[280px] flex flex-col" style={{ backgroundColor: '#F5EFE4', borderRadius: '2px', boxShadow: '0 2px 12px rgba(43,36,32,0.06)' }}>
+      <div style={{ height: 4, backgroundColor: '#A0522D', opacity: 0.55 }} />
+      <div className="p-5 flex flex-col flex-1">
+        <h4 className="f-display text-xl mb-2 leading-tight">{hotel.name}</h4>
+        {hotel.note && <div className="f-serif italic text-xs opacity-70 mb-2">{hotel.note}</div>}
+        <div className="flex items-start gap-1.5 f-sans text-xs opacity-70 mb-3 leading-relaxed">
+          <MapPin size={11} strokeWidth={1.5} className="mt-0.5 flex-shrink-0" />
+          <span>{hotel.address}</span>
+        </div>
+        <div className="mb-3 pb-3 border-b" style={{ borderColor: 'rgba(43,36,32,0.1)' }}>
+          <div className="f-sans text-[0.6rem] tracking-[0.3em] uppercase opacity-60 mb-1">{labels.from}</div>
+          <div className="f-display text-xl" style={{ color: '#A0522D' }}>{hotel.rate} <span className="f-sans text-[0.65rem] opacity-70">MXN {labels.perNight}</span></div>
+        </div>
+        {hotel.phone && (
+          <a href={`tel:${hotel.phone.replace(/\s/g, '')}`} className="mt-auto flex items-center gap-2 f-sans text-xs hover:opacity-70 tick">
+            <Phone size={11} strokeWidth={1.5} style={{ color: '#A0522D' }} />
+            <span>{hotel.phone}</span>
+          </a>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -91,18 +218,9 @@ export default function WeddingSite() {
   const [t, setT] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [faqIdx, setFaqIdx] = useState(null);
   const [activePlace, setActivePlace] = useState('oaxaca');
-  const [debugLog, setDebugLog] = useState([]);
-  const [showDebug, setShowDebug] = useState(true);
-
-  const logStatus = (alt, status, url) => {
-    setDebugLog(prev => {
-      const filtered = prev.filter(e => e.alt !== alt);
-      return [...filtered, { alt, status, url, t: Date.now() }];
-    });
-  };
 
   useEffect(() => {
-    const wedding = new Date('2027-02-13T14:00:00-06:00').getTime();
+    const wedding = new Date('2027-02-13T16:00:00-06:00').getTime();
     const tick = () => {
       const diff = wedding - Date.now();
       if (diff > 0) {
@@ -135,7 +253,7 @@ export default function WeddingSite() {
         p1: 'La intención será compartir este momento con las personas que más queremos e impacto han tenido en nuestros caminos. Nuestra boda representa una oportunidad única para reunir a quienes han caminado con nosotros en distintas etapas de la vida dejando grandes huellas.',
         p2: 'Elegimos Oaxaca porque ahí comenzó nuestro amor. Fue nuestro primer viaje de novios, en ese primer mes en el que todo era descubrimiento y emoción. Nos enamoramos el uno del otro, pero también de la magia de Oaxaca. Sus calles, su comida, su historia, su cultura, su gente y su naturaleza se volvieron parte de ese recuerdo que queremos revivir con las personas más cercanas en nuestra boda.',
         p3: 'Soñamos con una boda íntima y auténtica. Por eso, cada persona invitada es alguien verdaderamente importante para nosotros. Queremos que se sienta como una celebración relajada, llena de amor, emociones y mucha energía; con comida tradicional deliciosa y, claro, que no falte mezcal.',
-        p4: 'Nos llena de emoción y entusiasmo ver nuestra boda como una oportunidad única para que personas tan increíbles, que nos han acompañado a cada uno durante muchos años, al fin se conozcan.',
+        p4: 'Nos llena de emoción y entusiasmo ver nuestra boda como una oportunidad única para que personas tan increíbles, al fin se conozcan.',
         cta: '— Arantza & Sebastian'
       },
       event: {
@@ -174,14 +292,21 @@ export default function WeddingSite() {
         tip: 'Te recomendamos llegar 2–3 días antes y tomarte unos días en Puerto después de la boda. Valdrá la pena.'
       },
       stay: {
-        eyebrow: 'HOSPEDAJE', title: '¿Dónde quedarte?', sub: 'Te dejamos algunas recomendaciones cerca del venue. Te sugerimos reservar con anticipación.',
-        hotels: [
-          { name: 'Quinta Real Oaxaca', cat: 'Lujo', desc: 'Ex convento del siglo XVI en pleno centro histórico.', dist: '15 min del venue' },
-          { name: 'Casa Oaxaca', cat: 'Boutique', desc: 'Elegancia oaxaqueña con rooftop y vista a Santo Domingo.', dist: '18 min del venue' },
-          { name: 'Hotel Los Amantes', cat: 'Boutique', desc: 'Intimidad y diseño en el corazón de la ciudad.', dist: '17 min del venue' },
-          { name: 'City Express Oaxaca', cat: 'Confort', desc: 'Opción práctica y moderna para descansar.', dist: '20 min del venue' }
-        ],
-        flights: 'Vuelos', flightsDesc: 'Aeropuerto Internacional Xoxocotlán (OAX) recibe vuelos directos desde CDMX, Monterrey, Tijuana, Houston, Dallas y Los Ángeles. Desde Buenos Aires o Europa, la ruta más cómoda es vía CDMX.'
+        eyebrow: 'HOSPEDAJE',
+        title: '¿Dónde quedarte?',
+        intro: 'A continuación podrás encontrar recomendaciones de hoteles, alguno de ellos con código de descuento. Sin embargo, si buscas precio o viajas en grupo, no dejes de consultar en Airbnb.',
+        promoTitle: 'Hoteles con Código Promocional',
+        promoSub: 'Tarifas preferenciales presentando el código de nuestra boda al reservar.',
+        promoBadge: 'Código Boda',
+        otherTitle: 'Otras opciones de hoteles',
+        otherSub: 'Recomendaciones adicionales en el centro histórico, sin código promocional.',
+        from: 'Desde',
+        perNight: '/ noche',
+        code: 'Código de reserva',
+        book: 'Reservar online',
+        scrollHint: 'Desliza para ver más',
+        flights: 'Vuelos',
+        flightsDesc: 'Aeropuerto Internacional Xoxocotlán (OAX) recibe vuelos directos desde CDMX, Monterrey, Tijuana, Houston, Dallas y Los Ángeles. Desde Buenos Aires o Europa, la ruta más cómoda es vía CDMX.'
       },
       gallery: { eyebrow: 'NOSOTROS', title: 'Nuestro primer viaje de novios', subtitle: 'por Oaxaca y Puerto Escondido' },
       rsvp: { eyebrow: 'CONFIRMACIÓN', title: '¿Nos acompañas?', sub: 'Para confirmar tu lugar o resolver cualquier duda sobre tu visita a Oaxaca, ponte en contacto con nuestra wedding planner, Mariana Vez, a través de WhatsApp.', plannerName: 'Mariana Vez', plannerRole: 'Wedding Planner', whatsappLabel: 'Escribir por WhatsApp', whatsappNumber: '+52 951 656 1349', closing: 'Te esperamos' },
@@ -204,7 +329,7 @@ export default function WeddingSite() {
         p1: 'Our intention is to share this moment with the people we love most and who have had the greatest impact on our paths. Our wedding is a unique opportunity to gather those who have walked alongside us through different chapters of life, leaving deep imprints along the way.',
         p2: "We chose Oaxaca because that's where our love began. It was our first trip together as a couple, during that first month when everything was discovery and excitement. We fell in love with each other — but also with the magic of Oaxaca. Its streets, its food, its history, its culture, its people and its nature became part of a memory we want to relive with those closest to us on our wedding day.",
         p3: "We dream of an intimate and authentic wedding. That's why every invited person is truly meaningful to us. We want it to feel like a relaxed celebration, full of love, emotion and energy — with delicious traditional food and, of course, plenty of mezcal.",
-        p4: 'It fills us with joy to see our wedding as a unique chance for such incredible people, who have accompanied each of us for so many years, to finally meet.',
+        p4: 'It fills us with joy to see our wedding as a unique chance for such incredible people to finally meet.',
         cta: '— Arantza & Sebastian'
       },
       event: {
@@ -243,17 +368,24 @@ export default function WeddingSite() {
         tip: "We recommend arriving 2–3 days early and staying in Puerto a few days after the wedding. It'll be worth it."
       },
       stay: {
-        eyebrow: 'STAY', title: 'Where to stay?', sub: 'Here are some recommendations near the venue. We suggest booking well in advance.',
-        hotels: [
-          { name: 'Quinta Real Oaxaca', cat: 'Luxury', desc: '16th century former convent in the historic center.', dist: '15 min from venue' },
-          { name: 'Casa Oaxaca', cat: 'Boutique', desc: 'Oaxacan elegance with rooftop and Santo Domingo views.', dist: '18 min from venue' },
-          { name: 'Hotel Los Amantes', cat: 'Boutique', desc: 'Intimacy and design in the heart of the city.', dist: '17 min from venue' },
-          { name: 'City Express Oaxaca', cat: 'Comfort', desc: 'Practical and modern option to rest.', dist: '20 min from venue' }
-        ],
-        flights: 'Flights', flightsDesc: 'Xoxocotlán International Airport (OAX) receives direct flights from Mexico City, Monterrey, Tijuana, Houston, Dallas and Los Angeles. From Buenos Aires or Europe, the easiest route is via Mexico City.'
+        eyebrow: 'STAY',
+        title: 'Where to stay?',
+        intro: "Below you'll find hotel recommendations, some with a discount code. However, if you're looking for budget options or traveling in a group, be sure to check Airbnb as well.",
+        promoTitle: 'Hotels with Promo Code',
+        promoSub: 'Preferential rates by booking with our wedding code.',
+        promoBadge: 'Wedding Code',
+        otherTitle: 'Other hotel options',
+        otherSub: 'Additional recommendations in the historic center, without promo code.',
+        from: 'From',
+        perNight: '/ night',
+        code: 'Booking code',
+        book: 'Book online',
+        scrollHint: 'Swipe to see more',
+        flights: 'Flights',
+        flightsDesc: 'Xoxocotlán International Airport (OAX) receives direct flights from Mexico City, Monterrey, Tijuana, Houston, Dallas and Los Angeles. From Buenos Aires or Europe, the easiest route is via Mexico City.'
       },
       gallery: { eyebrow: 'US', title: 'Our first trip as a couple', subtitle: 'through Oaxaca and Puerto Escondido' },
-      rsvp: { eyebrow: 'RSVP', title: 'Will you join us?', sub: 'To confirm your spot or for any questions about your visit to Oaxaca, please contact our wedding planner, Mariana Vez, via WhatsApp.', plannerName: 'Mariana Vez', plannerRole: 'Wedding Planner', whatsappLabel: 'Message on WhatsApp', whatsappNumber: '+52 951 656 1349', closing: 'We can\'t wait to see you' },
+      rsvp: { eyebrow: 'RSVP', title: 'Will you join us?', sub: 'To confirm your spot or for any questions about your visit to Oaxaca, please contact our wedding planner, Mariana Vez, via WhatsApp.', plannerName: 'Mariana Vez', plannerRole: 'Wedding Planner', whatsappLabel: 'Message on WhatsApp', whatsappNumber: '+52 951 656 1349', closing: "We can't wait to see you" },
       faq: { eyebrow: 'FAQ', title: "What you're probably wondering", items: [
         { q: 'Can I bring a plus one?', a: 'Please check your invitation — it will specify whether your pass includes a plus one.' },
         { q: 'Will there be transportation from downtown?', a: "Yes. We'll organize shuttles from key points in the historic center to the hacienda and back at the end of the night. Details will be shared closer to the date." },
@@ -313,6 +445,17 @@ export default function WeddingSite() {
         .gallery-item:hover img { transform: scale(1.06); }
         .scroll-indicator { animation: drop 2s ease-in-out infinite; }
         @keyframes drop { 0%,100%{transform:translateY(0);opacity:.5} 50%{transform:translateY(10px);opacity:1} }
+        .h-scroll {
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(160,82,45,0.3) transparent;
+        }
+        .h-scroll > div > * { scroll-snap-align: start; }
+        .h-scroll::-webkit-scrollbar { height: 6px; }
+        .h-scroll::-webkit-scrollbar-track { background: transparent; }
+        .h-scroll::-webkit-scrollbar-thumb { background: rgba(160,82,45,0.25); border-radius: 3px; }
+        .h-scroll::-webkit-scrollbar-thumb:hover { background: rgba(160,82,45,0.5); }
         @media (max-width: 640px) { .countdown-num { font-size: 1.5rem !important; } }
       `}</style>
 
@@ -569,28 +712,64 @@ export default function WeddingSite() {
         </div>
       </section>
 
-      <section id="stay" className="py-24 md:py-32 px-6" style={{ backgroundColor: '#EBE2D2' }}>
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+      {/* ============== HOSPEDAJE ============== */}
+      <section id="stay" className="py-24 md:py-32" style={{ backgroundColor: '#EBE2D2' }}>
+        <div className="max-w-6xl mx-auto px-6 mb-12">
+          <div className="text-center">
             <div className="f-sans text-xs tracking-[0.4em] uppercase mb-4" style={{ color: '#A0522D' }}>{l.stay.eyebrow}</div>
             <h2 className="f-display text-4xl sm:text-5xl md:text-6xl mb-6">{l.stay.title}</h2>
-            <p className="f-serif text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: '#4A3F38' }}>{l.stay.sub}</p>
+            <p className="f-serif text-lg max-w-3xl mx-auto leading-relaxed" style={{ color: '#4A3F38' }}>{l.stay.intro}</p>
           </div>
-          <div className="grid sm:grid-cols-2 gap-5 mb-16">
-            {l.stay.hotels.map((h, i) => (
-              <div key={i} className="p-8 hover-lift" style={{ backgroundColor: '#F5EFE4', borderRadius: '2px' }}>
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="f-serif text-2xl">{h.name}</h3>
-                  <span className="f-sans text-[0.65rem] tracking-[0.2em] uppercase px-2 py-1" style={{ backgroundColor: 'rgba(160,82,45,0.1)', color: '#A0522D' }}>{h.cat}</span>
-                </div>
-                <p className="f-sans text-sm leading-relaxed opacity-70 mb-3">{h.desc}</p>
-                <div className="flex items-center gap-2 f-sans text-xs opacity-60">
-                  <MapPin size={12} strokeWidth={1.3} />
-                  <span>{h.dist}</span>
-                </div>
+        </div>
+
+        {/* PROMO HOTELS CAROUSEL */}
+        <div className="max-w-6xl mx-auto px-6 mb-4">
+          <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
+            <div>
+              <div className="inline-flex items-center gap-1.5 mb-2 px-2.5 py-1 f-sans text-[0.6rem] tracking-[0.3em] uppercase" style={{ backgroundColor: '#E8B07A', color: '#2B2420' }}>
+                <Tag size={10} strokeWidth={2} />
+                <span>{l.stay.promoBadge}</span>
               </div>
+              <h3 className="f-display text-2xl sm:text-3xl md:text-4xl">{l.stay.promoTitle}</h3>
+              <p className="f-serif text-base mt-1 opacity-70 max-w-xl">{l.stay.promoSub}</p>
+            </div>
+            <div className="f-sans text-[0.6rem] tracking-[0.3em] uppercase opacity-50 flex items-center gap-2">
+              <ArrowRight size={12} strokeWidth={1.5} />
+              <span>{l.stay.scrollHint}</span>
+            </div>
+          </div>
+        </div>
+        <div className="h-scroll overflow-x-auto pb-6 mb-16">
+          <div className="flex gap-5 px-6 max-w-6xl mx-auto" style={{ width: 'max-content', minWidth: '100%' }}>
+            {PROMO_HOTELS.map((h, i) => (
+              <PromoHotelCard key={i} hotel={h} labels={l.stay} lang={lang} />
             ))}
           </div>
+        </div>
+
+        {/* OTHER HOTELS CAROUSEL */}
+        <div className="max-w-6xl mx-auto px-6 mb-4">
+          <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
+            <div>
+              <h3 className="f-display text-2xl sm:text-3xl md:text-4xl">{l.stay.otherTitle}</h3>
+              <p className="f-serif text-base mt-1 opacity-70 max-w-xl">{l.stay.otherSub}</p>
+            </div>
+            <div className="f-sans text-[0.6rem] tracking-[0.3em] uppercase opacity-50 flex items-center gap-2">
+              <ArrowRight size={12} strokeWidth={1.5} />
+              <span>{l.stay.scrollHint}</span>
+            </div>
+          </div>
+        </div>
+        <div className="h-scroll overflow-x-auto pb-6 mb-16">
+          <div className="flex gap-4 px-6 max-w-6xl mx-auto" style={{ width: 'max-content', minWidth: '100%' }}>
+            {OTHER_HOTELS.map((h, i) => (
+              <OtherHotelCard key={i} hotel={h} labels={l.stay} />
+            ))}
+          </div>
+        </div>
+
+        {/* FLIGHTS */}
+        <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-3xl mx-auto text-center p-10" style={{ backgroundColor: '#F5EFE4' }}>
             <Plane size={28} strokeWidth={1.3} style={{ color: '#A0522D' }} className="mx-auto mb-4" />
             <h3 className="f-display text-2xl mb-4">{l.stay.flights}</h3>
